@@ -1,0 +1,14 @@
+# IDE files and folders
+/.project
+/.idea/
+
+# Build and test files
+/build/
+/tests/jasmine-core/
+/tests/sinon-chrome/
+
+# NPM
+/node_modules/
+
+# OSX
+.DS_Store

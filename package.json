@@ -1,0 +1,41 @@
+{
+	"name": "codext",
+	"version": "1.0.0",
+	"description": "Code viewer and editor embedded in your browser!",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bbc/Codext"
+	},
+	"author": {
+		"name": "Pyves",
+		"email": "pyvesdev@gmail.com",
+		"url": "https://github.com/PyvesB"
+	},
+	"contributors": [
+		{
+			"name": "Mika Leppala",
+			"email": "mika.leppala@gmail.com",
+			"url": "https://github.com/MikaLeppala"
+		}
+	],
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/bbc/Codext/issues"
+	},
+	"homepage": "https://github.com/bbc/Codext#readme",
+	"dependencies": {
+		"monaco-editor": "~0.14.3",
+		"requirejs": "^2.3.6"
+	},
+	"devDependencies": {
+		"del": "^3.0.0",
+		"gulp": "^3.9.1",
+		"gulp-eslint": "^5.0.0",
+		"gulp-minify": "^3.1.0",
+		"gulp-open": "^3.0.1",
+		"gulp-zip": "^4.2.0",
+		"jasmine": "^2.9.0",
+		"run-sequence": "^2.2.1",
+		"sinon-chrome": "^2.3.2"
+	}
+}

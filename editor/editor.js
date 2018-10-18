@@ -1,0 +1,145 @@
+"use strict";
+
+const supportedLocales = ["de","es","fr","hu","it","ja","ko","pr-br","ru","tr","zh-cn","zh-tw"];
+var editor;
+var editableActionRegistration;
+
+// Listen to messages from the content script.
+window.addEventListener("message", handleLaunchEvent);
+
+function handleLaunchEvent(event) {
+    require.config({
+        paths: {
+            "vs": "../lib/monaco-editor/min/vs"
+        }
+    });
+
+    const userLocale = getUserLocale();
+    if (userLocale !== null) {
+        require.config({
+            "vs/nls": {
+                availableLanguages: {
+                    "*": userLocale
+                }
+            }
+        });
+    }
+
+    require([ "vs/editor/editor.main" ], function() {
+        prepareAndLaunchEditor(event.data);
+    });
+}
+
+function getUserLocale() {
+    const languageTag = chrome.i18n.getUILanguage().toLowerCase();
+    // Extract ISO 639-1 language abbreviation.
+    const languageCode = languageTag.substr(0, languageTag.indexOf("-"));
+    if (supportedLocales.indexOf(languageCode) >= 0) {
+        return languageCode;
+    } else if (supportedLocales.indexOf(languageTag) >= 0) {
+        return languageTag;
+    }
+    return null;
+}
+
+function prepareAndLaunchEditor(message) {
+    chrome.storage.local.get("editable", function(state) {
+        const mappedLanguage = getLanguageForExtension(message.extension);
+        if (mappedLanguage === null) {
+            // Couldn't map a language based on extension, try to use MIME type.
+            chrome.runtime.sendMessage({action: "get_content_type"}, function(response) {
+                let mimeSubtype;
+                if (typeof response.contentType !== "undefined") {
+                    mimeSubtype = /.*\/([^;]*)/.exec(response.contentType)[1];
+                }
+                // If mimeSubtype undefined, Monaco will use default language
+                // settings.
+                launchEditor(message.code, state["editable"] === "true", mimeSubtype);
+            });
+        } else {
+            launchEditor(message.code, state["editable"] === "true", mappedLanguage);
+        }
+    });
+}
+
+function getLanguageForExtension(extension) {
+    for (const language of monaco.languages.getLanguages()) {
+        for (const monacoExtension of language.extensions) {
+            if (extension === monacoExtension) {
+                return language.id;
+            }
+        }
+    }
+    return null;
+}
+
+function launchEditor(code, editable, inferredLanguage) {
+    editor = monaco.editor.create(document.getElementById("container"), {
+        value: code,
+        scrollBeyondLastLine: false,
+        readOnly: !editable,
+        language: inferredLanguage,
+        folding: true,
+        cursorBlinking: "smooth",
+        dragAndDrop: true,
+        mouseWheelZoom: true
+    });
+    addOrUpdateEditableAction(editable);
+    addExportAction();
+    // Avoid using Monaco's automaticLayout option for better performance.
+    window.addEventListener("resize", function() {
+        editor.layout();
+    });
+}
+
+function addOrUpdateEditableAction(editable) {
+    if (typeof editableActionRegistration !== "undefined") {
+        editableActionRegistration.dispose();
+    }
+    editableActionRegistration = editor.addAction({
+        id: "editable",
+        label: `Make ${editable ? "read-only" : "editable"}`,
+        contextMenuGroupId: "1_menu",
+        contextMenuOrder: 1,
+        run: function() {
+            toggleEditable(editable);
+        }
+    });
+}
+
+function addExportAction() {
+    editor.addAction({
+        id: "export",
+        label: "Export content",
+        contextMenuGroupId: "1_menu",
+        contextMenuOrder: 2,
+        run: function() {
+            exportContent();
+        }
+    });
+}
+
+function toggleEditable(oldState) {
+    const newState = !oldState;
+    editor.updateOptions({
+        readOnly: !newState
+    });
+    chrome.storage.local.set({
+        editable: newState ? "true" : "false"
+    });
+    addOrUpdateEditableAction(newState);
+}
+
+function exportContent() {
+    // Encode contents and prepare for local download.
+    const downloadUrl = `data:application/json;base64,${btoa(editor.getValue())}`;
+    chrome.runtime.sendMessage({action: "get_url"}, function(response) {
+        chrome.downloads.download({
+            url: downloadUrl,
+            filename: response.url.substr(response.url.lastIndexOf("/") + 1)
+        });
+    });
+}
+
+// Signal to content script that this editor is ready to be launched.
+window.parent.postMessage("loaded", "*");

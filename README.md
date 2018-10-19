@@ -21,6 +21,10 @@
 <i><sub>On the left: Firefox and Chrome without Codext. On the right: same webpages with Codext enabled!</sub></i>
 </p>
 
+# Installation
+
+This plugin is available for installation on the [Chrome Web Store](https://chrome.google.com/webstore/detail/codext/mghlpehggoiecmpcdadkdbeofcheghcc) and the [Firefox Add-ons Store](https://addons.mozilla.org/firefox/addon/codext/).
+
 # Features at a glance
 
 **Codext** harnesses the power of the [Monaco Editor](https://github.com/Microsoft/monaco-editor) by dynamically inserting it into webpages. The extension targets preformatted text (i.e. pages containing a unique `<pre>` tag) and determines the programming language to use by looking at the URL's extension and/or the returned `Content-Type` header. An editor instance is fully configured on the fly and in addition to standard editor features such as syntax highlighting, section folding and code formatting, Codext allows users to toggle editability of the document and export changes locally.

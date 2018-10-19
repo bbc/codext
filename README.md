@@ -23,7 +23,7 @@
 
 # Installation
 
-This plugin is available for installation on the [Chrome Web Store](https://chrome.google.com/webstore/detail/codext/mghlpehggoiecmpcdadkdbeofcheghcc) and the [Firefox Add-ons Store](https://addons.mozilla.org/firefox/addon/codext/).
+This plugin is available for installation on the ![Chrome](https://images.jupload.fr/1502307545.png) [Chrome Web Store](https://chrome.google.com/webstore/detail/codext/mghlpehggoiecmpcdadkdbeofcheghcc) and the ![Firefox](https://images.jupload.fr/1506028278.png) [Firefox Add-ons Store](https://addons.mozilla.org/firefox/addon/codext/).
 
 # Features at a glance
 

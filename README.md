@@ -27,17 +27,19 @@ This plugin is available for installation on the ![Chrome](https://images.juploa
 
 # Features at a glance
 
-**Codext** harnesses the power of the [Monaco Editor](https://github.com/Microsoft/monaco-editor) by dynamically inserting it into webpages. The extension targets preformatted text (i.e. pages containing a unique `<pre>` tag) and determines the programming language to use by looking at the URL's extension and/or the returned `Content-Type` header. An editor instance is fully configured on the fly and in addition to standard editor features such as syntax highlighting, section folding and code formatting, Codext allows users to toggle editability of the document and export changes locally.
+**Codext** harnesses the power of the [Monaco Editor](https://github.com/Microsoft/monaco-editor) by dynamically inserting it into webpages. The extension targets preformatted text (i.e. pages containing a unique `<pre>` tag) and determines the programming language to use by looking at the URL's extension and/or the returned `Content-Type` header. An editor instance is fully configured on the fly and in addition to standard features such as syntax highlighting, section folding and code formatting, Codext allows users to interact with documents and export changes locally.
 
-We've found Codext useful in the following scenarios:
+Codext will help you out with the following tasks:
 * displaying code from online file systems or repositories.
 * opening and viewing local files in your browser.
-* prettifying API responses (e.g. GET requests returning JSON in Chrome).
+* prettifying API responses (e.g. GET requests returning YAML).
 * making quick changes to files and downloading those changes locally.
-* viewing GitHub raw files in a proper editor (even though support is only partial, see [Known issues](https://github.com/bbc/Codext#Known-issues)).
+* viewing GitLab/Bitbucket raw files in a proper editor.
 * and any use-case you can think of!
 
-# Getting started
+Right-click anywhere in a loaded editor to display additional options such as code formatting. To temporarily turn Codext off, right-click on its icon in the browser's toolbar, select _Disable extension_ and refresh the page!
+
+# Getting started as a developer
 
 [npm](https://github.com/npm/npm) is used to handle dependencies. Make sure it's properly configured and then run `npm i`.
 
@@ -64,7 +66,7 @@ The [jasmine](https://github.com/jasmine/jasmine) and [sinon-chrome](https://git
 
 #### `$ code`
 
-Codext was built by [Pyves](https://github.com/PyvesB) and [Mika Leppala](https://github.com/MikaLeppala) during a BBC hackaton. Want to make the project better, faster, stronger? Contributions are more than welcome, open a **pull request** and share your code! Simply **fork** the repository by clicking on the icon on the top right of this page and you're ready to go!
+Codext was built by [Pierre-Yves](https://github.com/PyvesB) and [Mika](https://github.com/MikaLeppala) during a BBC hackaton. Want to make the project better, faster, stronger? Contributions are more than welcome, open a **pull request** and share your code! Simply **fork** the repository by clicking on the icon on the top right of this page and you're ready to go!
 
 #### :speech_balloon: Support
 

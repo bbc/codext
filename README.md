@@ -1,5 +1,5 @@
 <p align="center">
-<img src ="https://github.com/bbc/Codext/blob/master/images/codext_logo.png?raw=true" width="20%"/>
+<img src ="https://github.com/bbc/Codext/blob/master/src/images/codext_logo.png?raw=true" width="20%"/>
 <br/>
 </p>
 
@@ -60,6 +60,10 @@ The [jasmine](https://github.com/jasmine/jasmine) and [sinon-chrome](https://git
 #### :chart_with_upwards_trend: Running the reporter
 
 [ESLint](https://github.com/eslint/eslint) can be run with the `gulp lint` command.
+
+#### :pencil2: Formatting the code
+
+[Prettier](https://github.com/prettier/prettier) can be run with the `gulp prettify` command.
 
 
 # Contributing

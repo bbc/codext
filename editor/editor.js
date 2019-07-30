@@ -114,7 +114,7 @@ function addExportAction() {
         contextMenuGroupId: "1_menu",
         contextMenuOrder: 2,
         run: function() {
-            exportContent();
+            chrome.runtime.sendMessage({action: "download_content", content: editor.getValue()});
         }
     });
 }
@@ -128,17 +128,6 @@ function toggleEditable(oldState) {
         editable: newState ? "true" : "false"
     });
     addOrUpdateEditableAction(newState);
-}
-
-function exportContent() {
-    // Encode contents and prepare for local download.
-    const downloadUrl = `data:application/json;base64,${btoa(editor.getValue())}`;
-    chrome.runtime.sendMessage({action: "get_url"}, function(response) {
-        chrome.downloads.download({
-            url: downloadUrl,
-            filename: response.url.substr(response.url.lastIndexOf("/") + 1)
-        });
-    });
 }
 
 // Signal to content script that this editor is ready to be launched.

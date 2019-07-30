@@ -7,6 +7,7 @@ describe("Background script", function() {
         chrome.contextMenus.update.flush();
         chrome.storage.local.set.flush();
         chrome.pageAction.show.flush();
+        chrome.downloads.download.flush();
     });
 
     it("should show page action when message received", function() {
@@ -38,27 +39,25 @@ describe("Background script", function() {
         });
     });
 
-    it("should send the tab's url when message received", function() {
+    it("should download the messages's contents", function() {
         chrome.tabs.query.withArgs({
             active: true,
             currentWindow: true
         }).yields([ {
             id: 3,
-            url: "https://my-url"
+            url: "https://my-url/some-file.txt"
         } ]);
 
-        const sendResponse = jasmine.createSpy("send-response");
         chrome.runtime.onMessage.dispatch({
-            action: "get_url"
+            action: "download_content",
+            content: "my-content"
         }, {
             tab: {
                 id: 3
             }
-        }, sendResponse);
-
-        expect(sendResponse).toHaveBeenCalledWith({
-            url: "https://my-url"
         });
+
+        expect(chrome.downloads.download.firstCall.args[0].filename).toEqual("some-file.txt");
     });
 
     it("should save content type when headers are received", function() {

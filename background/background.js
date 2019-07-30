@@ -20,18 +20,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             sendResponse({
                 contentType: tabIdToContentType[sender.tab.id]
             });
-        } else if (request.action === "get_url") {
+        } else if (request.action === "download_content") {
             chrome.tabs.query({
                 active: true,
                 currentWindow: true
             }, function(tabs) {
-                sendResponse({
-                    url: tabs[0].url
+                // Encode contents and prepare for local download.
+                const blob = new Blob([ request.content ], { type: "text/plain" });
+                const downloadUrl = URL.createObjectURL(blob);
+                const tabUrl = tabs[0].url;
+                chrome.downloads.download({
+                    url: downloadUrl,
+                    filename: tabUrl.substr(tabUrl.lastIndexOf("/") + 1)
                 });
             });
-            // Indicate to the sender that the message response will be sent
-            // asynchronously due to chrome.tabs.query.
-            return true;
         }
     }
 });

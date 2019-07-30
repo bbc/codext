@@ -8,7 +8,6 @@ describe("Editor script", function() {
         // Dummy editor object so that we can attach spy objects in tests.
         editor = {};
         chrome.storage.local.set.flush();
-        chrome.downloads.download.flush();
     });
 
     it("should return supported user locale or null", function() {
@@ -129,6 +128,9 @@ describe("Editor script", function() {
 
     it("should add export action to editor", function() {
         editor.addAction = jasmine.createSpy("add-action");
+        editor.getValue = function() {
+            return "my-content";
+        }
 
         addExportAction();
 
@@ -139,6 +141,13 @@ describe("Editor script", function() {
             contextMenuOrder: 2,
             run: jasmine.any(Function)
         });
+        
+        // Execute the run function to check that it sends the correct message.
+        editor.addAction.calls.mostRecent().args[0].run();
+        expect(chrome.runtime.sendMessage.withArgs({
+            action: "download_content",
+            content: "my-content"
+        }).calledOnce).toBeTruthy();
     });
 
     it("should update editor, persist new state and add updated action when switched to read-only", function() {
@@ -169,21 +178,5 @@ describe("Editor script", function() {
             readOnly: false
         });
         expect(window.addOrUpdateEditableAction).toHaveBeenCalledWith(true);
-    });
-
-    it("should download the editor's contents", function() {
-        editor.getValue = jasmine.createSpy("get-value").and.returnValue("code-content");
-        chrome.runtime.sendMessage.withArgs({
-            action: "get_url"
-        }).yields({
-            url: "http://my-url/my-file.txt"
-        });
-
-        exportContent();
-
-        expect(chrome.downloads.download.withArgs({
-            url: "data:application/json;base64,Y29kZS1jb250ZW50",
-            filename: "my-file.txt"
-        }).calledOnce).toBeTruthy();
     });
 });

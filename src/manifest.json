@@ -16,7 +16,6 @@
 	},
 	"content_scripts": [
 		{
-			"all_frames": true,
 			"js": [
 				"content/content.js"
 			],

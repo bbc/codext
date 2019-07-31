@@ -121,7 +121,7 @@ describe("Background script", function() {
     expect(
       chrome.notifications.create.withArgs("update_notification", {
         title: "Extension update",
-        message: "Extension updated to version 1.0.0",
+        message: "Codext updated to version 1.0.0",
         type: "basic",
         iconUrl: "images/codext_logo.png"
       }).calledOnce

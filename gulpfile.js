@@ -32,7 +32,7 @@ gulp.task("clean", gulp.series("clean-test", "clean-build"));
 
 gulp.task("minify-sources", function() {
   return gulp
-    .src("src/**/*.js")
+    .src("src/**/*")
     .pipe(
       minify({
         noSource: true,

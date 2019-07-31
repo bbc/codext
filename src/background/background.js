@@ -84,7 +84,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === "update") {
     chrome.notifications.create("update_notification", {
       title: "Extension update",
-      message: `Extension updated to version ${chrome.runtime.getManifest().version}`,
+      message: `Codext updated to version ${chrome.runtime.getManifest().version}`,
       type: "basic",
       iconUrl: "images/codext_logo.png"
     });

@@ -41,7 +41,9 @@ Right-click anywhere in a loaded editor to display additional options such as co
 
 # Getting started as a developer
 
-[npm](https://github.com/npm/npm) is used to handle dependencies. Make sure it's properly configured and then run `npm i`.
+Make sure you're using a recent version of Node.js (latest build successfully performed with release 10.16.3).
+
+[npm](https://github.com/npm/cli) is used to handle dependencies. Install them by running `npm i` in the root directory of the project.
 
 [gulp](https://github.com/gulpjs/gulp) is required for the steps listed below. Use `npm install gulp-cli -g` to install the gulp command line tool.
 

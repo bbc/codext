@@ -1,6 +1,6 @@
 {
 	"name": "codext",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Code viewer and editor embedded in your browser!",
 	"repository": {
 		"type": "git",

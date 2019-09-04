@@ -111,7 +111,7 @@ describe("Background script", function() {
 
   it("should notify about update", function() {
     chrome.runtime.getManifest.returns({
-      version: "1.0.2"
+      version: "1.0.3"
     });
 
     chrome.runtime.onInstalled.dispatch({
@@ -121,7 +121,7 @@ describe("Background script", function() {
     expect(
       chrome.notifications.create.withArgs("update_notification", {
         title: "Extension update",
-        message: "Codext updated to version 1.0.2",
+        message: "Codext updated to version 1.0.3",
         type: "basic",
         iconUrl: "images/codext_logo.png"
       }).calledOnce

@@ -4,12 +4,18 @@ const tabIdToContentType = {};
 
 // Populate the extension's context menu with relevant items. Right-click on the
 // page action icon to open it.
-chrome.storage.local.get("disabled", function(disabledState) {
-  addNormalMenu(getDisabledStateLabel(disabledState["disabled"]), "disabled");
+chrome.storage.local.get(["disabled", "theme"], function(state) {
+  const theme = state["theme"];
+
+  addNormalMenu(getDisabledStateLabel(state["disabled"]), "disabled");
   addMenuSeparator("separator1");
+  addRadioMenu("Light Theme", "vs", theme === "vs");
+  addRadioMenu("Dark Theme", "vs-dark", theme === "vs-dark");
+  addRadioMenu("High Contrast Theme", "hc-black", theme === "hc-black");
+  addMenuSeparator("separator2");
   addNormalMenu("Homepage", "homepage");
   addNormalMenu("License", "license");
-  addMenuSeparator("separator2");
+  addMenuSeparator("separator3");
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -91,11 +97,29 @@ chrome.runtime.onInstalled.addListener(function(details) {
   }
 });
 
+function selectTheme(info, tab) {
+  chrome.storage.local.set({
+    theme: info.menuItemId
+  });
+  chrome.tabs.sendMessage(tab.id, {action: "set_theme", content: info.menuItemId});
+}
+
 function addNormalMenu(menuTitle, menuId) {
   chrome.contextMenus.create({
     title: menuTitle,
     id: menuId,
     contexts: ["page_action"]
+  });
+}
+
+function addRadioMenu(menuTitle, menuId, checked) {
+  chrome.contextMenus.create({
+    title: menuTitle,
+    type: "radio",
+    checked: checked,
+    id: menuId,
+    contexts: ["page_action"],
+    onclick: selectTheme
   });
 }
 

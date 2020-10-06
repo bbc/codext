@@ -7,6 +7,12 @@ var editableActionRegistration;
 // Listen to messages from the content script.
 window.addEventListener("message", handleLaunchEvent);
 
+chrome.runtime.onMessage.addListener(function(call) {
+  if (call.action === "set_theme") {
+    monaco.editor.setTheme(call.content);
+  }
+});
+
 function handleLaunchEvent(event) {
   require.config({
     paths: {
@@ -43,8 +49,10 @@ function getUserLocale() {
 }
 
 function prepareAndLaunchEditor(message) {
-  chrome.storage.local.get("editable", function(state) {
+  chrome.storage.local.get(["editable", "theme"], function(state) {
     const mappedLanguage = getLanguageForExtension(message.extension);
+    const theme = state["theme"] || "vs";
+
     if (mappedLanguage === null) {
       // Couldn't map a language based on extension, try to use MIME type.
       chrome.runtime.sendMessage({ action: "get_content_type" }, function(response) {
@@ -54,10 +62,10 @@ function prepareAndLaunchEditor(message) {
         }
         // If mimeSubtype undefined, Monaco will use default language
         // settings.
-        launchEditor(message.code, state["editable"] === "true", mimeSubtype);
+        launchEditor(message.code, state["editable"] === "true", mimeSubtype, theme);
       });
     } else {
-      launchEditor(message.code, state["editable"] === "true", mappedLanguage);
+      launchEditor(message.code, state["editable"] === "true", mappedLanguage, theme);
     }
   });
 }
@@ -73,7 +81,7 @@ function getLanguageForExtension(extension) {
   return null;
 }
 
-function launchEditor(code, editable, inferredLanguage) {
+function launchEditor(code, editable, inferredLanguage, theme) {
   editor = monaco.editor.create(document.getElementById("container"), {
     value: code,
     scrollBeyondLastLine: false,
@@ -82,7 +90,8 @@ function launchEditor(code, editable, inferredLanguage) {
     folding: true,
     cursorBlinking: "smooth",
     dragAndDrop: true,
-    mouseWheelZoom: true
+    mouseWheelZoom: true,
+    theme: theme
   });
   addOrUpdateEditableAction(editable);
   addExportAction();

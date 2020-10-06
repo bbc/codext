@@ -3,10 +3,10 @@
 var monaco;
 
 describe("Editor script", function() {
-  beforeEach(function() {
+  beforeEach(function(done) {
     // Dummy editor object so that we can attach spy objects in tests.
     editor = {};
-    chrome.storage.local.set.flush();
+    chrome.storage.local.clear(done);
   });
 
   it("should return supported user locale or null", function() {
@@ -43,12 +43,13 @@ describe("Editor script", function() {
       code: "code-content"
     });
 
-    expect(window.launchEditor).toHaveBeenCalledWith("code-content", false, "yaml");
+    expect(window.launchEditor).toHaveBeenCalledWith("code-content", false, "yaml", "vs");
   });
 
   it("should prepare to launch editable editor by inferring the language with the MIME type", function() {
-    chrome.storage.local.get.withArgs("editable").yields({
-      editable: "true"
+    chrome.storage.local.get.withArgs(["editable", "theme"]).yields({
+      editable: "true",
+      theme: "vs-dark"
     });
     chrome.runtime.sendMessage
       .withArgs({
@@ -71,7 +72,7 @@ describe("Editor script", function() {
       code: "code-content"
     });
 
-    expect(window.launchEditor).toHaveBeenCalledWith("code-content", true, "json");
+    expect(window.launchEditor).toHaveBeenCalledWith("code-content", true, "json", "vs-dark");
   });
 
   it("should launch editor, add actions and add resize listener", function() {
@@ -84,7 +85,7 @@ describe("Editor script", function() {
     spyOn(window, "addOrUpdateEditableAction");
     spyOn(window, "addExportAction");
 
-    launchEditor("code-content", false, "java");
+    launchEditor("code-content", false, "java", "vs");
 
     expect(monaco.editor.create).toHaveBeenCalledWith(null, {
       value: "code-content",
@@ -94,7 +95,8 @@ describe("Editor script", function() {
       folding: true,
       cursorBlinking: "smooth",
       dragAndDrop: true,
-      mouseWheelZoom: true
+      mouseWheelZoom: true,
+      theme: "vs"
     });
     expect(window.addOrUpdateEditableAction).toHaveBeenCalledWith(false);
     expect(window.addExportAction).toHaveBeenCalled();

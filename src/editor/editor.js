@@ -14,26 +14,29 @@ chrome.runtime.onMessage.addListener(function(call) {
 });
 
 function handleLaunchEvent(event) {
-  require.config({
-    paths: {
-      vs: "../lib/monaco-editor/min/vs"
-    }
-  });
-
-  const userLocale = getUserLocale();
-  if (userLocale !== null) {
+  const message = event.data;
+  if (typeof message.code !== "undefined") {
     require.config({
-      "vs/nls": {
-        availableLanguages: {
-          "*": userLocale
-        }
+      paths: {
+        vs: "../lib/monaco-editor/min/vs"
       }
     });
-  }
 
-  require(["vs/editor/editor.main"], function() {
-    prepareAndLaunchEditor(event.data);
-  });
+    const userLocale = getUserLocale();
+    if (userLocale !== null) {
+      require.config({
+        "vs/nls": {
+          availableLanguages: {
+            "*": userLocale
+          }
+        }
+      });
+    }
+
+    require(["vs/editor/editor.main"], function() {
+      prepareAndLaunchEditor(message);
+    });
+  }
 }
 
 function getUserLocale() {

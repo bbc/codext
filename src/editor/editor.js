@@ -7,7 +7,7 @@ var editableActionRegistration;
 // Listen to messages from the content script.
 window.addEventListener("message", handleLaunchEvent);
 
-chrome.runtime.onMessage.addListener(function(call) {
+chrome.runtime.onMessage.addListener(function (call) {
   if (call.action === "set_theme") {
     monaco.editor.setTheme(call.content);
   }
@@ -18,8 +18,8 @@ function handleLaunchEvent(event) {
   if (typeof message.code !== "undefined") {
     require.config({
       paths: {
-        vs: "../lib/monaco-editor/min/vs"
-      }
+        vs: "../lib/monaco-editor/min/vs",
+      },
     });
 
     const userLocale = getUserLocale();
@@ -27,13 +27,13 @@ function handleLaunchEvent(event) {
       require.config({
         "vs/nls": {
           availableLanguages: {
-            "*": userLocale
-          }
-        }
+            "*": userLocale,
+          },
+        },
       });
     }
 
-    require(["vs/editor/editor.main"], function() {
+    require(["vs/editor/editor.main"], function () {
       prepareAndLaunchEditor(message);
     });
   }
@@ -52,13 +52,13 @@ function getUserLocale() {
 }
 
 function prepareAndLaunchEditor(message) {
-  chrome.storage.local.get(["editable", "theme"], function(state) {
+  chrome.storage.local.get(["editable", "theme"], function (state) {
     const mappedLanguage = getLanguageForExtension(message.extension);
     const theme = state["theme"] || "vs";
 
     if (mappedLanguage === null) {
       // Couldn't map a language based on extension, try to use MIME type.
-      chrome.runtime.sendMessage({ action: "get_content_type" }, function(response) {
+      chrome.runtime.sendMessage({ action: "get_content_type" }, function (response) {
         let mimeSubtype;
         if (typeof response.contentType !== "undefined") {
           mimeSubtype = /.*\/([^;]*)/.exec(response.contentType)[1];
@@ -94,12 +94,12 @@ function launchEditor(code, editable, inferredLanguage, theme) {
     cursorBlinking: "smooth",
     dragAndDrop: true,
     mouseWheelZoom: true,
-    theme: theme
+    theme: theme,
   });
   addOrUpdateEditableAction(editable);
   addExportAction();
   // Avoid using Monaco's automaticLayout option for better performance.
-  window.addEventListener("resize", function() {
+  window.addEventListener("resize", function () {
     editor.layout();
   });
 }
@@ -113,9 +113,9 @@ function addOrUpdateEditableAction(editable) {
     label: `Make ${editable ? "read-only" : "editable"}`,
     contextMenuGroupId: "1_menu",
     contextMenuOrder: 1,
-    run: function() {
+    run: function () {
       toggleEditable(editable);
-    }
+    },
   });
 }
 
@@ -125,22 +125,22 @@ function addExportAction() {
     label: "Export content",
     contextMenuGroupId: "1_menu",
     contextMenuOrder: 2,
-    run: function() {
+    run: function () {
       chrome.runtime.sendMessage({
         action: "download_content",
-        content: editor.getValue()
+        content: editor.getValue(),
       });
-    }
+    },
   });
 }
 
 function toggleEditable(oldState) {
   const newState = !oldState;
   editor.updateOptions({
-    readOnly: !newState
+    readOnly: !newState,
   });
   chrome.storage.local.set({
-    editable: newState ? "true" : "false"
+    editable: newState ? "true" : "false",
   });
   addOrUpdateEditableAction(newState);
 }

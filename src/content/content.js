@@ -9,7 +9,7 @@ function prepareEditorLaunch(element) {
   // Hide contents to avoid flickering while the rest of the script loads
   // asynchronously.
   element.style.setProperty("display", "none", "");
-  chrome.storage.local.get("disabled", function(state) {
+  chrome.storage.local.get("disabled", function (state) {
     if (state["disabled"] === "true") {
       element.style.removeProperty("display");
     } else {
@@ -19,7 +19,7 @@ function prepareEditorLaunch(element) {
   });
   // Notify the background to show the page action for the current tab.
   chrome.runtime.sendMessage({
-    action: "show_page_action"
+    action: "show_page_action",
   });
 }
 
@@ -29,13 +29,13 @@ function shouldLaunchEditor(body) {
 }
 
 function listenToEditorMessages(element) {
-  window.addEventListener("message", function(message) {
+  window.addEventListener("message", function (message) {
     // Wait for editor frame to signal that it has loaded.
     if (message.data === "loaded") {
       element.parentNode.removeChild(element);
       const response = {
         code: element.textContent,
-        extension: getExtension()
+        extension: getExtension(),
       };
       message.source.postMessage(response, chrome.runtime.getURL(""));
     }

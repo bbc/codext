@@ -1,10 +1,10 @@
 {
 	"name": "codext",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "Code viewer and editor embedded in your browser!",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/bbc/Codext"
+		"url": "https://github.com/bbc/codext"
 	},
 	"author": {
 		"name": "Pyves",
@@ -20,9 +20,9 @@
 	],
 	"license": "Apache-2.0",
 	"bugs": {
-		"url": "https://github.com/bbc/Codext/issues"
+		"url": "https://github.com/bbc/codext/issues"
 	},
-	"homepage": "https://github.com/bbc/Codext#readme",
+	"homepage": "https://github.com/bbc/codext#readme",
 	"dependencies": {
 		"monaco-editor": "~0.20.0",
 		"requirejs": "^2.3.6"

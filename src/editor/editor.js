@@ -90,7 +90,6 @@ function launchEditor(code, editable, inferredLanguage, theme) {
     scrollBeyondLastLine: false,
     readOnly: !editable,
     language: inferredLanguage,
-    folding: true,
     cursorBlinking: "smooth",
     dragAndDrop: true,
     mouseWheelZoom: true,

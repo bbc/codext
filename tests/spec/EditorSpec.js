@@ -92,7 +92,6 @@ describe("Editor script", function () {
       scrollBeyondLastLine: false,
       readOnly: true,
       language: "java",
-      folding: true,
       cursorBlinking: "smooth",
       dragAndDrop: true,
       mouseWheelZoom: true,

@@ -3,10 +3,11 @@
 var monaco;
 
 describe("Editor script", function () {
-  beforeEach(function (done) {
+  beforeEach(function () {
     // Dummy editor object so that we can attach spy objects in tests.
     editor = {};
-    chrome.storage.local.clear(done);
+    chrome.storage.local.get.flush();
+    chrome.storage.local.set.flush();
   });
 
   it("should return supported user locale or null", function () {
@@ -21,7 +22,7 @@ describe("Editor script", function () {
   });
 
   it("should prepare to launch read-only editor by inferring the language with the extension", function () {
-    chrome.storage.local.get.withArgs("editable").yields({
+    chrome.storage.local.get.withArgs(["editable", "theme"]).yields({
       editable: "false",
     });
     monaco = {

@@ -96,4 +96,4 @@ The following open-source projects are used to power Codext:
 
 Apache License 2.0, see [LICENSE](https://github.com/bbc/Codext/blob/master/LICENSE) for more details.
 
-Copyright 2018 British Broadcasting Corporation
+Copyright 2020 British Broadcasting Corporation

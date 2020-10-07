@@ -12,11 +12,11 @@
 **View and edit code from within your browser!**
 
 <p align="center" style="font-size:5px;">
-<img src ="https://github.com/bbc/Codext/blob/master/screenshots/firefox_raw.png?raw=true" width="420" />
-<img src ="https://github.com/bbc/Codext/blob/master/screenshots/firefox_codext.png?raw=true" width="420" />
+<img src ="https://github.com/bbc/Codext/blob/master/screenshots/firefox_raw.png?raw=true" width="49%" />
+<img src ="https://github.com/bbc/Codext/blob/master/screenshots/firefox_codext.png?raw=true" width="49%" />
 <br />
-<img src ="https://github.com/bbc/Codext/blob/master/screenshots/chrome_raw.png?raw=true" width="420" />
-<img src ="https://github.com/bbc/Codext/blob/master/screenshots/chrome_codext.png?raw=true" width="420" />
+<img src ="https://github.com/bbc/Codext/blob/master/screenshots/chrome_raw.png?raw=true" width="49%" />
+<img src ="https://github.com/bbc/Codext/blob/master/screenshots/chrome_codext.png?raw=true" width="49%" />
 <br />
 <i><sub>On the left: Firefox and Chrome without Codext. On the right: same webpages with Codext enabled!</sub></i>
 </p>

@@ -35,33 +35,31 @@ function listenToEditorMessages(element) {
       element.parentNode.removeChild(element);
       const response = {
         code: element.textContent,
-        extension: getExtension(),
+        filename: getFilename(),
       };
       message.source.postMessage(response, chrome.runtime.getURL(""));
     }
   });
 }
 
-function getExtension() {
-  let url = location.href;
+function getFilename() {
+  let filename = location.href;
   // Remove path.
-  let index = url.lastIndexOf("/");
+  let index = filename.lastIndexOf("/");
   if (index !== -1) {
-    url = url.substring(index + 1);
+    filename = filename.substring(index + 1);
   }
   // Remove fragment identifier.
-  index = url.indexOf("#");
+  index = filename.indexOf("#");
   if (index !== -1) {
-    url = url.substring(0, index);
+    filename = filename.substring(0, index);
   }
   // Remove query parameters.
-  index = url.indexOf("?");
+  index = filename.indexOf("?");
   if (index !== -1) {
-    url = url.substring(0, index);
+    filename = filename.substring(0, index);
   }
-  // Remove file name.
-  index = url.indexOf(".");
-  return index === -1 ? "" : url.substring(index);
+  return filename;
 }
 
 function insertEditorFrame() {

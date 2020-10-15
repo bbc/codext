@@ -53,11 +53,11 @@ function getUserLocale() {
 
 function prepareAndLaunchEditor(message) {
   chrome.storage.local.get(["editable", "theme"], function (state) {
-    const mappedLanguage = getLanguageForExtension(message.extension);
+    const mappedLanguage = getLanguageForFilename(message.filename);
     const theme = state["theme"] || "vs";
 
     if (mappedLanguage === null) {
-      // Couldn't map a language based on extension, try to use MIME type.
+      // Couldn't map a language based on filename, try to use MIME type.
       chrome.runtime.sendMessage({ action: "get_content_type" }, function (response) {
         let mimeSubtype;
         if (typeof response.contentType !== "undefined") {
@@ -73,10 +73,10 @@ function prepareAndLaunchEditor(message) {
   });
 }
 
-function getLanguageForExtension(extension) {
+function getLanguageForFilename(filename) {
   for (const language of monaco.languages.getLanguages()) {
     for (const monacoExtension of language.extensions) {
-      if (extension === monacoExtension) {
+      if (filename.endsWith(monacoExtension)) {
         return language.id;
       }
     }

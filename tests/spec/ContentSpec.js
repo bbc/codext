@@ -95,7 +95,7 @@ describe("Content script", function () {
     spyOn(window, "postMessage").and.callFake(function (content, destination) {
       if (content !== "loaded") {
         expect(content.code).toEqual("code-content");
-        expect(content.extension).toEqual(".html");
+        expect(content.filename).toEqual("SpecRunner.html");
         expect(destination).toEqual("chrome-extension://my-app-id/");
         expect(document.getElementsByTagName("pre").length).toEqual(0);
         done();

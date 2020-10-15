@@ -21,7 +21,7 @@ describe("Editor script", function () {
     expect(getUserLocale()).toBeNull();
   });
 
-  it("should prepare to launch read-only editor by inferring the language with the extension", function () {
+  it("should prepare to launch read-only editor by inferring the language with the filename", function () {
     chrome.storage.local.get.withArgs(["editable", "theme"]).yields({
       editable: "false",
     });
@@ -40,7 +40,7 @@ describe("Editor script", function () {
     spyOn(window, "launchEditor");
 
     prepareAndLaunchEditor({
-      extension: ".yml",
+      filename: "test.yml",
       code: "code-content",
     });
 

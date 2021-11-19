@@ -24,7 +24,7 @@
 	},
 	"homepage": "https://github.com/bbc/codext#readme",
 	"dependencies": {
-		"monaco-editor": "~0.20.0",
+		"monaco-editor": "~0.30.1",
 		"requirejs": "^2.3.6"
 	},
 	"devDependencies": {

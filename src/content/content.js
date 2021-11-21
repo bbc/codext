@@ -62,7 +62,7 @@ function getFilename() {
   return filename;
 }
 
-function insertEditorFrame() {	
+function insertEditorFrame() {
   const iframe = document.createElement("iframe");
   iframe.setAttribute("src", chrome.runtime.getURL("editor/editor.html"));
   iframe.setAttribute("style", "border: 0px none; width: 100%; height: 100%; display: block;");

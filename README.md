@@ -41,7 +41,7 @@ Right-click anywhere in a loaded editor to display additional options such as co
 
 # Getting started as a developer
 
-Make sure you're using a recent version of Node.js (latest build successfully performed with release 10.16.3).
+Make sure you're using a recent version of Node.js (latest build successfully performed with release 16.13.1).
 
 [npm](https://github.com/npm/cli) is used to handle dependencies. Install them by running `npm i` in the root directory of the project.
 

@@ -78,7 +78,7 @@ describe("Content script", function () {
 
     const builtIframe = document.body.insertBefore.calls.mostRecent().args[0];
     expect(builtIframe.src).toContain("runtime-url/editor/editor.html");
-    expect(builtIframe.style.cssText).toEqual("border: 0px none; width: 100%; height: 100%;");
+    expect(builtIframe.style.cssText).toEqual("border: 0px none; width: 100%; height: 100%; display: block;");
     expect(document.body.style.margin).toEqual("0px");
   });
 

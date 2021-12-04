@@ -65,8 +65,10 @@ function getFilename() {
 function insertEditorFrame() {
   const iframe = document.createElement("iframe");
   iframe.setAttribute("src", chrome.runtime.getURL("editor/editor.html"));
-  iframe.setAttribute("style", "border: 0px none; width: 100%; height: 100%;");
+  iframe.setAttribute("style", "border: 0px none; width: 100%; height: 100%; display: block;");
 
+  document.documentElement.style.height = "100%";
   document.body.style.margin = "0px";
+  document.body.style.height = "100%";
   document.body.insertBefore(iframe, document.body.firstChild);
 }
